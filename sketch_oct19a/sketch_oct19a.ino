@@ -20,7 +20,8 @@ void checkEcho() {
 
   duration = pulseIn(ECHO, HIGH);
   distance = duration * 0.034 / 2;
-  Serial.print("Distance: ");
+  Serial.print("\n Distance: ");
+  Serial.print(distance);
 
 }
 
@@ -30,10 +31,11 @@ void setup() {
   pinMode(TRIGGER, OUTPUT);
   pinMode(ECHO, INPUT);
   
-  servo.attach(SERVO);
+//  servo.attach(SERVO);
 }
 
 void loop() {
-  servo.write(random(180));
-  delay(random(100, 1000));
+//  servo.write(random(180));
+  checkEcho();
+  delay(150);
 }
