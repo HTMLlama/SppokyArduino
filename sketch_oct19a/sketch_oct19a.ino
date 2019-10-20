@@ -9,6 +9,17 @@ Servo servo;
 long duration;
 int distance;
 
+void runServo() {
+  servo.write(1);
+  delay(500);
+  servo.write(90);
+  delay(500);
+  servo.write(180);
+  delay(500);
+  servo.write(90);
+  delay(500);
+}
+
 void checkEcho() {
   digitalWrite(TRIGGER, LOW);
   delayMicroseconds(2);
@@ -23,6 +34,10 @@ void checkEcho() {
   Serial.print("\n Distance: ");
   Serial.print(distance);
 
+  if(distance < 20) {
+    runServo();  
+  }
+
 }
 
 void setup() {
@@ -31,7 +46,7 @@ void setup() {
   pinMode(TRIGGER, OUTPUT);
   pinMode(ECHO, INPUT);
   
-//  servo.attach(SERVO);
+  servo.attach(SERVO);
 }
 
 void loop() {
