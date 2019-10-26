@@ -1,39 +1,29 @@
-#include <Servo.h>
 
-const int SERVO = 9;
+const int FAN = 6;
 const int TRIGGER = 3;
 const int ECHO = 5;
 
 const int RED = 9;
 
-int counter = 0;
-
-Servo servo;
+int GAP_SPACE = 120;
 
 long duration;
 int distance;
 
 int redBgt = 0;
 
-void runServo() {
-  servo.write(1);
-  delay(500);
-  servo.write(90);
-  delay(500);
-  servo.write(180);
-  delay(500);
-  servo.write(90);
-  delay(500);
-}
-
 void setLed() {
 
-  if(distance < 100) {
-    redBgt = map(distance, 100, 0, 50, 250);
+  if(distance < GAP_SPACE) {
+    redBgt = map(distance, GAP_SPACE, 0, 5, 250);
+
+    digitalWrite(FAN, HIGH);
+    
     Serial.print(" Brightness: ");
     Serial.print(redBgt);
   } else {
     redBgt = 1;  
+    digitalWrite(FAN, LOW);
   }
 
   analogWrite(RED, redBgt);
@@ -58,20 +48,13 @@ void setup() {
   Serial.begin(9600);
 
   pinMode(RED, OUTPUT);
-  
+  pinMode(FAN, OUTPUT);
   pinMode(TRIGGER, OUTPUT);
   pinMode(ECHO, INPUT);
   
-  servo.attach(SERVO);
 }
 
 void loop() {
-//  if(counter >= 200) {
-    checkEcho();
-    counter = 0;
-//  }
-//  counter++;
-  
+  checkEcho();
   setLed();
-//  delay(30);
 }
